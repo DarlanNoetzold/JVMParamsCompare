@@ -17,7 +17,7 @@ public class HeavyCalculationController {
     HeavyCalculationService heavyCalculationService;
 
     @GetMapping("/compute/{max}")
-    public ResponseEntity<HeavyCalculationModel> computeHeavyCalculations(@PathVariable long max) {
+    public ResponseEntity<HeavyCalculationModel> computeHeavyCalculations(@PathVariable Long max) {
 
         double result = 0;
         for (int i = 0; i < max; i++) {
