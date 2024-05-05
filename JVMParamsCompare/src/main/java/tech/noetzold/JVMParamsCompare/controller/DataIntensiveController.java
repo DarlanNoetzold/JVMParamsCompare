@@ -19,7 +19,7 @@ public class DataIntensiveController {
     @Autowired
     DataIntensiveService dataIntensiveService;
 
-    @GetMapping("/process")
+    @GetMapping("/process/{size}")
     public ResponseEntity<DataIntensiveModel> processDataIntensively(@PathVariable Long size) {
         String result = LongStream.rangeClosed(1, size)
                 .mapToObj(Long::toString)
