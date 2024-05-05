@@ -11,7 +11,7 @@ import tech.noetzold.JVMParamsCompare.service.IODataService;
 import java.io.*;
 
 @RestController
-@RequestMapping("/io-simulation")
+    @RequestMapping("/io-simulation")
 public class IOSimulationController {
 
     @Autowired
