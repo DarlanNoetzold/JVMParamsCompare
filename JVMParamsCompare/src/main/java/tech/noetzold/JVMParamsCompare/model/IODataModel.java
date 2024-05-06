@@ -17,6 +17,7 @@ public class IODataModel {
     private Long id;
 
     @Lob
+    @Column(columnDefinition = "TEXT")
     private String data;
 
     public IODataModel(String data) {
