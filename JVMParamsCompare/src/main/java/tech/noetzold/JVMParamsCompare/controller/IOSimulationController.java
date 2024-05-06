@@ -3,6 +3,7 @@ package tech.noetzold.JVMParamsCompare.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import tech.noetzold.JVMParamsCompare.model.IODataModel;
@@ -17,11 +18,11 @@ public class IOSimulationController {
     @Autowired
     private IODataService ioDataService;
 
-    @GetMapping("/simulate")
-    public ResponseEntity<IODataModel> simulateIOOperations() throws IOException {
+    @GetMapping("/simulate/{lines}")
+    public ResponseEntity<IODataModel> simulateIOOperations(@PathVariable Long lines) throws IOException {
         File tempFile = File.createTempFile("test", ".txt");
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
-            for (int i = 0; i < 10000; i++) {
+            for (int i = 0; i < lines; i++) {
                 writer.write("Linha " + i + "\n");
             }
         }
