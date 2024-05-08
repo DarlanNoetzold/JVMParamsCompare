@@ -46,7 +46,7 @@ services:
     networks:
       - app-network
 
-  app_IO_operation:
+  app_io_operation:
     build:
       context: .
       dockerfile: Dockerfile.IOOperation
