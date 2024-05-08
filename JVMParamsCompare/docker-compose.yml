@@ -14,6 +14,102 @@ services:
     networks:
       - app-network
 
+  app_high_request_load:
+    build:
+      context: .
+      dockerfile: Dockerfile.HighRequestLoad
+    ports:
+      - "1112:1111"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/database
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  app_memory_time_balance:
+    build:
+      context: .
+      dockerfile: Dockerfile.MemoryTimeBalance
+    ports:
+      - "1113:1111"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/database
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  app_IO_operation:
+    build:
+      context: .
+      dockerfile: Dockerfile.IOOperation
+    ports:
+      - "1114:1111"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/database
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  app_high_cpu_low_memory:
+    build:
+      context: .
+      dockerfile: Dockerfile.HighCPULowMemory
+    ports:
+      - "1115:1111"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/database
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  app_high_disponibility:
+    build:
+      context: .
+      dockerfile: Dockerfile.HighDisponibility
+    ports:
+      - "1116:1111"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/database
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - db
+    networks:
+      - app-network
+
+  app_mixed_workloads:
+    build:
+      context: .
+      dockerfile: Dockerfile.MixedWorkloads
+    ports:
+      - "1117:1111"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/database
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - db
+    networks:
+      - app-network
+
   db:
     image: postgres:13
     environment:
