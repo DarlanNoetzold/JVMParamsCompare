@@ -1,0 +1,4 @@
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY target/JVMParamsCompare-0.0.1-SNAPSHOT.jar /app
+ENTRYPOINT ["java", "-jar", "-XX:+UseSerialGC", "-Xms512m", "-Xmx512m", "-XX:MaxGCPauseMillis=300", "-XX:NewRatio=3", "-XX:SurvivorRatio=6", "-XX:InlineSmallCode=1500", "-Xss128k", "/app/JVMParamsCompare-0.0.1-SNAPSHOT.jar"]
