@@ -3,8 +3,10 @@ package tech.noetzold.JVMParamsCompare.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tech.noetzold.JVMParamsCompare.message.config.RabbitmqQueues;
 import tech.noetzold.JVMParamsCompare.model.DataModel;
 import tech.noetzold.JVMParamsCompare.service.DataService;
+import tech.noetzold.JVMParamsCompare.service.RabbitmqService;
 
 import java.util.List;
 
@@ -15,10 +17,14 @@ public class DataController {
     @Autowired
     private DataService dataService;
 
+    @Autowired
+    private RabbitmqService rabbitmqService;
+
     @PostMapping
     public ResponseEntity<DataModel> addData(@RequestBody DataModel data) {
-        DataModel newData = dataService.addData(data);
-        return ResponseEntity.ok(newData);
+        rabbitmqService.sendMessage(RabbitmqQueues.DATA_QUEUE, data);
+
+        return ResponseEntity.ok(data);
     }
 
     @GetMapping
