@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import tech.noetzold.JVMParamsCompare.message.config.RabbitmqQueues;
 import tech.noetzold.JVMParamsCompare.model.HeavyCalculationModel;
 import tech.noetzold.JVMParamsCompare.service.HeavyCalculationService;
+import tech.noetzold.JVMParamsCompare.service.RabbitmqService;
 
 @RestController
 @RequestMapping("/heavy-calculation")
@@ -16,18 +18,15 @@ public class HeavyCalculationController {
     @Autowired
     HeavyCalculationService heavyCalculationService;
 
+    @Autowired
+    private RabbitmqService rabbitmqService;
+
     @GetMapping("/compute/{max}")
     public ResponseEntity<HeavyCalculationModel> computeHeavyCalculations(@PathVariable Long max) {
 
-        double result = 0;
-        for (int i = 0; i < max; i++) {
-            result += Math.sin(i) * Math.tan(i);
-        }
+        rabbitmqService.sendMessage(RabbitmqQueues.HEAVY_CALCULATION_QUEUE, new HeavyCalculationModel(0L, max, 0L));
 
-        HeavyCalculationModel heavyCalculationModel = heavyCalculationService
-                .saveResult(new HeavyCalculationModel(0L, max, result));
-
-        return ResponseEntity.ok(heavyCalculationModel);
+        return ResponseEntity.ok(new HeavyCalculationModel(0L, max, 0L));
     }
 }
 
