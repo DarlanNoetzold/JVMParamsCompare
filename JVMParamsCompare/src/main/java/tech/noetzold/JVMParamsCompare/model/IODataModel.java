@@ -20,6 +20,8 @@ public class IODataModel {
     @Column(columnDefinition = "TEXT")
     private String data;
 
+    private Long lines;
+
     public IODataModel(String data) {
         this.data = data;
     }
