@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import tech.noetzold.JVMParamsCompare.message.config.RabbitmqQueues;
 import tech.noetzold.JVMParamsCompare.model.IODataModel;
 import tech.noetzold.JVMParamsCompare.service.IODataService;
+import tech.noetzold.JVMParamsCompare.service.RabbitmqService;
 
 import java.io.*;
 
@@ -18,26 +20,13 @@ public class IOSimulationController {
     @Autowired
     private IODataService ioDataService;
 
+    @Autowired
+    private RabbitmqService rabbitmqService;
+
     @GetMapping("/simulate/{lines}")
     public ResponseEntity<IODataModel> simulateIOOperations(@PathVariable Long lines) throws IOException {
-        File tempFile = File.createTempFile("test", ".txt");
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
-            for (int i = 0; i < lines; i++) {
-                writer.write("Linha " + i + "\n");
-            }
-        }
-
-        StringBuilder output = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new FileReader(tempFile))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                output.append(line).append("\n");
-            }
-        }
-
-        tempFile.delete();
-        IODataModel ioDataModel = ioDataService.saveData(output.toString());
-
+        IODataModel ioDataModel = new IODataModel(0L, "", lines);
+        rabbitmqService.sendMessage(RabbitmqQueues.IO_SIMULATION_QUEUE, ioDataModel);
 
         return ResponseEntity.ok(ioDataModel);
     }
