@@ -14,6 +14,14 @@ public class HeavyCalculationService {
 
     @Transactional
     public HeavyCalculationModel saveResult(HeavyCalculationModel heavyCalculationModel){
+
+        double result = 0;
+        for (int i = 0; i < heavyCalculationModel.getMax(); i++) {
+            result += Math.sin(i) * Math.tan(i);
+        }
+
+        heavyCalculationModel.setResult(result);
+
         return heavyCalculationRepository.save(heavyCalculationModel);
     }
 }
