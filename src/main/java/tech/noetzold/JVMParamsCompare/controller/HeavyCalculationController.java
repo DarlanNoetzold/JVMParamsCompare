@@ -12,8 +12,8 @@ import tech.noetzold.JVMParamsCompare.service.HeavyCalculationService;
 import tech.noetzold.JVMParamsCompare.service.RabbitmqService;
 
 @RestController
-@RequestMapping("/heavy-calculation")
-public class HeavyCalculationController {
+    @RequestMapping("/heavy-calculation")
+    public class HeavyCalculationController {
 
     @Autowired
     HeavyCalculationService heavyCalculationService;
