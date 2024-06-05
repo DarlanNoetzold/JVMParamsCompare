@@ -5,6 +5,9 @@ services:
       dockerfile: Dockerfile.HighRequestLoad
     ports:
       - "1112:1111"
+      - "8192:8192"
+      - "5000:5000"
+      - "5001:5001"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/database
       - SPRING_DATASOURCE_USERNAME=user
