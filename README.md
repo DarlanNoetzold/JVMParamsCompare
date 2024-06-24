@@ -44,6 +44,7 @@ Ensure your JMeter test plans (jmeter_tests.jmx) are correctly configured to tar
 Execute the JMeter test plan from the command line or through the JMeter GUI.
 
 jmeter -n -t jmeter_tests.jmx -l results.jtl
+
 -n runs JMeter in non-GUI mode, -t specifies the test file, and -l specifies the results file.
 
 ## Step 4: Monitoring Performance
