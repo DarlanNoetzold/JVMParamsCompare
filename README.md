@@ -14,7 +14,7 @@ How to test:
 ### 1. Clone the Repository
 Clone the repository containing the Dockerfiles and the Docker Compose configuration.
 ```bash
-git clone https://github.com/yourrepository/jvm-optimization.git
+git clone https://github.com/DarlanNoetzold/JVMParamsCompare
 ```
 ### 2. Navigate to the Project Directory
 Change directory to the cloned repository.
