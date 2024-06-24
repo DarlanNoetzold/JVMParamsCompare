@@ -1,13 +1,44 @@
+version: '3.8'
+
 services:
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=database
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d database"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "rabbitmq-diagnostics -q ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   app_high_request_load:
     build:
       context: .
       dockerfile: Dockerfile.HighRequestLoad
     ports:
       - "1112:1111"
-      - "8192:8192"
-      - "5000:5000"
-      - "5001:5001"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/database
       - SPRING_DATASOURCE_USERNAME=user
@@ -17,10 +48,13 @@ services:
       - RABBITMQ_DEFAULT_PASS=guest
       - RABBITMQ_DEFAULT_HOST=rabbitmq
     depends_on:
-      - db
-      - rabbitmq
+      db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
     networks:
       - app-network
+
   app_io_operation:
     build:
       context: .
@@ -36,10 +70,13 @@ services:
       - RABBITMQ_DEFAULT_PASS=guest
       - RABBITMQ_DEFAULT_HOST=rabbitmq
     depends_on:
-      - db
-      - rabbitmq
+      db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
     networks:
       - app-network
+
   app_high_cpu_low_memory:
     build:
       context: .
@@ -55,10 +92,13 @@ services:
       - RABBITMQ_DEFAULT_PASS=guest
       - RABBITMQ_DEFAULT_HOST=rabbitmq
     depends_on:
-      - db
-      - rabbitmq
+      db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
     networks:
       - app-network
+
   app_high_disponibility:
     build:
       context: .
@@ -74,10 +114,13 @@ services:
       - RABBITMQ_DEFAULT_PASS=guest
       - RABBITMQ_DEFAULT_HOST=rabbitmq
     depends_on:
-      - db
-      - rabbitmq
+      db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
     networks:
       - app-network
+
   app_mixed_workloads:
     build:
       context: .
@@ -93,31 +136,13 @@ services:
       - RABBITMQ_DEFAULT_PASS=guest
       - RABBITMQ_DEFAULT_HOST=rabbitmq
     depends_on:
-      - db
-      - rabbitmq
+      db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
     networks:
       - app-network
-  db:
-    image: postgres:13
-    environment:
-      - POSTGRES_DB=database
-      - POSTGRES_USER=user
-      - POSTGRES_PASSWORD=password
-    volumes:
-      - db-data:/var/lib/postgresql/data
-    networks:
-      - app-network
-  rabbitmq:
-    image: rabbitmq:3-management
-    ports:
-      - "15672:15672"
-      - "5672:5672"
-    environment:
-      - RABBITMQ_DEFAULT_USER=guest
-      - RABBITMQ_DEFAULT_PASS=guest
-      - RABBITMQ_DEFAULT_HOST=rabbitmq
-    networks:
-      - app-network
+
   cadvisor:
     image: gcr.io/cadvisor/cadvisor
     volumes:
@@ -131,8 +156,15 @@ services:
     networks:
       - app-network
     privileged: true
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
 networks:
   app-network:
     driver: bridge
+
 volumes:
   db-data:
