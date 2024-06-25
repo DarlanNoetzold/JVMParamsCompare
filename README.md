@@ -19,7 +19,6 @@ git clone https://github.com/DarlanNoetzold/JVMParamsCompare
 ### 2. Navigate to the Project Directory
 Change directory to the cloned repository and Compile the project.
 
-cd jvm-optimization
 mvn package -Dmaven.test.skip
 
 
