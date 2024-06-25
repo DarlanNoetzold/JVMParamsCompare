@@ -17,10 +17,11 @@ Clone the repository containing the Dockerfiles and the Docker Compose configura
 git clone https://github.com/DarlanNoetzold/JVMParamsCompare
 ```
 ### 2. Navigate to the Project Directory
-Change directory to the cloned repository and Compile the project.
+Change directory to the cloned repository and Compile the project. 
 
-mvn package -Dmaven.test.skip
+mvn clean install
 
+OBS.: Run the maven command just if you have the rabbitmq and the postgres up. If not, just use the .jar already compiled in the /target folder of this repository.
 
 ### 3. Build the Docker Images
 Use the Docker Compose file to build the Docker images for each application scenario.
