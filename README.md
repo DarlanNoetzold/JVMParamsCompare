@@ -17,9 +17,11 @@ Clone the repository containing the Dockerfiles and the Docker Compose configura
 git clone https://github.com/DarlanNoetzold/JVMParamsCompare
 ```
 ### 2. Navigate to the Project Directory
-Change directory to the cloned repository.
+Change directory to the cloned repository and Compile the project.
 
 cd jvm-optimization
+mvn package -Dmaven.test.skip
+
 
 ### 3. Build the Docker Images
 Use the Docker Compose file to build the Docker images for each application scenario.
