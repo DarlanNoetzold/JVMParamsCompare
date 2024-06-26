@@ -7,4 +7,4 @@ WORKDIR /app
 COPY target/JVMParamsCompare-0.0.1-SNAPSHOT.jar /app
 
 # Definir as opções de inicialização da JVM com as configurações JMX
-ENTRYPOINT ["java", "-XX:+UseParallelGC", "-Xms4g", "-Xmx4g", "-XX:MaxGCPauseMillis=200", "-XX:NewRatio=2", "-XX:SurvivorRatio=8", "-XX:MaxTenuringThreshold=1", "-XX:InlineSmallCode=2000", "-Xss256k", "-Dcom.sun.management.jmxremote", "-Dcom.sun.management.jmxremote.port=8192", "-Dcom.sun.management.jmxremote.rmi.port=5001", "-Djava.rmi.server.hostname=0.0.0.0", "-Dcom.sun.management.jmxremote.authenticate=false", "-Dcom.sun.management.jmxremote.ssl=false", "-jar", "/app/JVMParamsCompare-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-XX:+UseParallelGC", "-Xms4g", "-Xmx8g", "-XX:MaxGCPauseMillis=200", "-XX:NewRatio=2", "-XX:SurvivorRatio=8", "-XX:MaxTenuringThreshold=1", "-XX:InlineSmallCode=2000", "-Xss256k", "-Dcom.sun.management.jmxremote", "-Dcom.sun.management.jmxremote.port=8192", "-Dcom.sun.management.jmxremote.rmi.port=5001", "-Djava.rmi.server.hostname=0.0.0.0", "-Dcom.sun.management.jmxremote.authenticate=false", "-Dcom.sun.management.jmxremote.ssl=false", "-jar", "/app/JVMParamsCompare-0.0.1-SNAPSHOT.jar"]
