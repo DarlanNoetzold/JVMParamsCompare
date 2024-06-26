@@ -17,9 +17,11 @@ Clone the repository containing the Dockerfiles and the Docker Compose configura
 git clone https://github.com/DarlanNoetzold/JVMParamsCompare
 ```
 ### 2. Navigate to the Project Directory
-Change directory to the cloned repository.
+Change directory to the cloned repository and Compile the project. 
 
-cd jvm-optimization
+mvn clean install
+
+OBS.: Run the maven command just if you have the rabbitmq and the postgres up. If not, just use the .jar already compiled in the /target folder of this repository.
 
 ### 3. Build the Docker Images
 Use the Docker Compose file to build the Docker images for each application scenario.
@@ -44,6 +46,7 @@ Ensure your JMeter test plans (jmeter_tests.jmx) are correctly configured to tar
 Execute the JMeter test plan from the command line or through the JMeter GUI.
 
 jmeter -n -t jmeter_tests.jmx -l results.jtl
+
 -n runs JMeter in non-GUI mode, -t specifies the test file, and -l specifies the results file.
 
 ## Step 4: Monitoring Performance
