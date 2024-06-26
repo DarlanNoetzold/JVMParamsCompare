@@ -8,4 +8,4 @@ WORKDIR /app
 COPY target/JVMParamsCompare-0.0.1-SNAPSHOT.jar /app
 
 # Command to run the application
-ENTRYPOINT ["java", "-XX:+UseG1GC", "-Xms4g", "-Xmx4g", "-XX:MaxGCPauseMillis=250", "-XX:NewSize=1g", "-XX:MaxNewSize=1g", "-XX:SurvivorRatio=8", "-Xss512k", "-XX:ParallelGCThreads=8", "-XX:ConcGCThreads=2", "-jar", "/app/JVMParamsCompare-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-XX:+UseG1GC", "-Xms4g", "-Xmx8g", "-XX:MaxGCPauseMillis=250", "-XX:NewSize=1g", "-XX:MaxNewSize=1g", "-XX:SurvivorRatio=8", "-Xss512k", "-XX:ParallelGCThreads=8", "-XX:ConcGCThreads=2", "-jar", "/app/JVMParamsCompare-0.0.1-SNAPSHOT.jar"]
